@@ -7,7 +7,7 @@ Stable tag: 4.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-A responsive gallery which always fits four screen and never looks dull.
+A responsive gallery which always fits your screen and never looks dull.
 
 == Description ==
 
