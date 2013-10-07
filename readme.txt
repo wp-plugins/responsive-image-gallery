@@ -1,5 +1,5 @@
 === Plugin Name ===
-Contributors: (Sajesh Bahing, Rubesh Shankhadev )
+Contributors: Sajesh Bahing, Rubesh Shankhadev 
 Tags: Image gallery, Lightbox, collagePlus Image gallery, responsive image gallery, image, images, gallery, photos, CollagePlus
 Requires at least: 3.0.1
 Tested up to: 3.4
