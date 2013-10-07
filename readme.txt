@@ -1,5 +1,5 @@
 === Plugin Name ===
-Contributors: (Sajesh Bahing, Rubesh)
+Contributors: (Sajesh Bahing, Rubesh Shankhadev )
 Tags: Image gallery, Lightbox, collagePlus Image gallery, responsive image gallery, image, images, gallery, photos, CollagePlus
 Requires at least: 3.0.1
 Tested up to: 3.4
@@ -34,7 +34,7 @@ This plugin does not give that functionality. The users can upload the images fr
 
 == Screenshots ==
 
-1. A Screenshot of the gallery screenshot-1.PNG
+1. A Screenshot of the gallery
 
 == Other Notes ==
 
