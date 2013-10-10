@@ -12,8 +12,8 @@ A responsive gallery which always fits your screen and never looks dull.
 == Description ==
 
 This plugin is the combination of collagePlus jquery image gallery and lightbox image gallery. This plugin is responsive
-and and always fits your screen width. You can use the shoot codes provided to put the gallery anywhere you want. The
-options for the shortcodes is easily shown in the admin panel. 
+and always fits your screen width. You can use the short codes provided, to put the gallery anywhere you want. The
+options for the shortcodes is available at the admin panel. 
 
 The gallery can be displayed as single gallery, multiple gallery or all the gallery that the users have created.
 
