@@ -110,7 +110,7 @@
 		foreach($gallery as $key => $image){
 			?>
 				<div class="Image_Wrapper" <?php echo ($image->desc_ != '')? "data-caption='".substr(stripslashes($image->desc_), 0, 30)."..'" : '' ;?>>
-					<a href="<?php echo $_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING']."&gallery=".$image->id; ?>">
+					<a href="<?php the_permalink(); ?>?gallery=<?php echo $image->id; ?>">
 						<img src="<?php echo $image->thumb;?>">
 					</a>
 				</div>
