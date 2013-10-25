@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: Responsive Image Gallery
- * Description: Image gallery made by integrating "collagePlus" and "Lightbox" jquery plugin
+ * Description: Image gallery made by integrating "collagePlus" and "Fancybox" jquery plugin
  * Version: 1.1
  * Author: Sajesh Bahing
  * Author URI: http://www.sajes-bahing.com.np
