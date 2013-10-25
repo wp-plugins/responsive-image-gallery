@@ -11,15 +11,7 @@
 			});
 		});
 		
-		<?php if(is_numeric($gallery_id) || isset($_GET['gallery'])){ ?>
-		jQuery('.Collage a').lightBox({
-			fixedNavigation:true,
-			imageLoading: '<?php echo plugins_url('responsive-image-gallery/images/ajax-loader.gif'); ?>',
-			imageBtnClose: '<?php echo plugins_url('responsive-image-gallery/images/close.png'); ?>',
-			imageBtnPrev: '<?php echo plugins_url('responsive-image-gallery/images/prev.png'); ?>',
-			imageBtnNext: '<?php echo plugins_url('responsive-image-gallery/images/next.png'); ?>'
-			});
-		<?php } ?>
+		jQuery(".fancybox").fancybox();
 		
 		// Here we apply the actual CollagePlus plugin
 		function collage() {
@@ -47,11 +39,6 @@
 	});
 
     </script>
-	<style type="text/css">
-		.Collage img:hover{
-			border-color: <?php echo (stripos(get_option( "res_sajes_gallery_image_border"), "#") !== false ? get_option( "res_sajes_gallery_image_border" ) : "#".get_option( "res_sajes_gallery_image_border" )); ?> !important;
-		}
-	</style>
 	<?php
 		global $wpdb;
 		$query = "";
@@ -88,21 +75,11 @@
 		foreach($images as $image):
 		?>
 		<div class="Image_Wrapper" <?php echo ($image->desc_ != '')? "data-caption='".stripslashes($image->desc_)."'" : '' ;?>>
-			<a href="<?php echo $image->image;?>">
+			<a class="fancybox" rel="gallery1" href="<?php echo $image->image;?>">
 				<img src="<?php echo $image->thumb;?>">
 			</a>
 		</div>
 		<?php endforeach; ?>
-		<!--<div class="Image_Wrapper" data-caption="This is some data <u>with</u>html in it">
-			<a>
-				<img src="http://placehold.it/450x300/53777A/ffffff">
-			</a>
-		</div> Div with description-->
-		<!--<div class="Image_Wrapper">
-			<a href="http://edlea.com">
-				<img src="images/ed-lea-dribbble-8.png"/>
-			</a>
-		</div> Div with link-->
 	</section>
 	<?php 
 	}else{
@@ -110,7 +87,7 @@
 		foreach($gallery as $key => $image){
 			?>
 				<div class="Image_Wrapper" <?php echo ($image->desc_ != '')? "data-caption='".substr(stripslashes($image->desc_), 0, 30)."..'" : '' ;?>>
-					<a href="<?php the_permalink(); ?>?gallery=<?php echo $image->id; ?>">
+					<a class="fancybox" href="<?php echo $_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING']."&gallery=".$image->id; ?>">
 						<img src="<?php echo $image->thumb;?>">
 					</a>
 				</div>

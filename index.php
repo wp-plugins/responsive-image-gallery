@@ -4,8 +4,8 @@
  * Description: Image gallery made by integrating "collagePlus" and "Lightbox" jquery plugin
  * Version: 1.0
  * Author: Sajesh Bahing
- * Author URI: http://www.sajes-bahing.com.np
  * License: Its free
+ *
  */
  
  class Index{
@@ -42,7 +42,7 @@
 		wp_enqueue_script('responsive_sajes_whitespace', plugins_url('js/jquery.removeWhitespace.min.js', __FILE__));
 		
 		if($light)
-			wp_enqueue_script('responsive_sajes_light', plugins_url('js/light.js', __FILE__));
+			wp_enqueue_script('responsive_sajes_light', plugins_url('js/jquery.fancybox.js', __FILE__));
 	}
 	
 	function add_option_page_function(){
@@ -81,14 +81,14 @@
 	
 	function prepare_db_table(){
 		global $wpdb;
-		$sql = "CREATE TABLE IF NOT EXISTS ".$wpdb->prefix."res_gallery (
+		$sql = "CREATE TABLE ".$wpdb->prefix."res_gallery (
 		  id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
 		  time_ datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
 		  name tinytext NOT NULL,
 		  desc_ longtext
 		);";
 		
-		$sql1 = "CREATE TABLE IF NOT EXISTS ".$wpdb->prefix."res_gallery_image (
+		$sql1 = "CREATE TABLE ".$wpdb->prefix."res_gallery_image (
 		  id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
 		  gallery_id int,
 		  thumb longtext,
@@ -105,11 +105,6 @@
 		$insert = $wpdb->insert($wpdb->prefix.'options', 
 								array('option_name' => 'res_sajes_gallery',
 										'option_value' => 'yes',
-										'autoload' => 'no'));
-		
-		$insert = $wpdb->insert($wpdb->prefix.'options', 
-								array('option_name' => 'res_sajes_gallery_image_border',
-										'option_value' => '#298FBD',
 										'autoload' => 'no'));
 	}
 	
@@ -168,11 +163,6 @@
 			$wpdb->update($wpdb->prefix.'options', 
 							array('option_value'=> $_POST['show_header']),
 							array('option_name' => 'res_sajes_gallery'));
-		}else if(isset($_POST['submit_color_code'])){
-			global $wpdb; 
-			$wpdb->update($wpdb->prefix.'options', 
-							array('option_value'=> $_POST['color_code']),
-							array('option_name' => 'res_sajes_gallery_image_border'));
 		}
 		include ABSPATH . 'wp-content/plugins/responsive-image-gallery/misc.php';
 	}
