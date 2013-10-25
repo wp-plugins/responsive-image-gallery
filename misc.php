@@ -21,6 +21,17 @@ jQuery(function() {
 	</form>
 	
 	<br><br>
+	
+	<h1>Your Image Border Color</h1>
+	
+	<form method="post">
+		<label>What color do you want for your image border?<br>
+		Currently You have selected "<?php echo get_option( "res_sajes_gallery_image_border", $default );?>"</label><br><br>
+		<input type="text" name="color_code" ><br><br>
+		<input type="submit" name="submit_color_code" value="Ok" class="button button-primary" >
+	</form>
+	
+	<br><br>
 	<h1>Your Galleries</h1>
 	<?php
 		global $wpdb;

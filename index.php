@@ -4,8 +4,9 @@
  * Description: Image gallery made by integrating "collagePlus" and "Lightbox" jquery plugin
  * Version: 1.0
  * Author: Sajesh Bahing
+ * Author URI: http://www.sajes-bahing.com.np
+ * Plugin URI: http://wordpress.org/plugins/responsive-image-gallery/
  * License: Its free
- *
  */
  
  class Index{
@@ -159,10 +160,13 @@
 			global $wpdb;
 			$delete = $wpdb->delete($wpdb->prefix.'res_gallery', array('id'=>$_GET['delete']));
 		}else if(isset($_POST['submit_show_header'])){
-			global $wpdb; 
-			$wpdb->update($wpdb->prefix.'options', 
-							array('option_value'=> $_POST['show_header']),
-							array('option_name' => 'res_sajes_gallery'));
+		
+			update_option("res_sajes_gallery", $_POST['show_header']);
+			
+		}else if(isset($_POST['submit_color_code'])){
+		
+			update_option("res_sajes_gallery_image_border", $_POST['color_code']);
+			
 		}
 		include ABSPATH . 'wp-content/plugins/responsive-image-gallery/misc.php';
 	}
