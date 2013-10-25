@@ -1,6 +1,6 @@
 === Plugin Name ===
 Contributors: Sajesh Bahing, Rubesh Shankhadev 
-Tags: Image gallery, Lightbox, collagePlus Image gallery, responsive image gallery, image, images, gallery, photos, CollagePlus
+Tags: Image gallery, Fancybox, collagePlus Image gallery, responsive image gallery, image, images, gallery, photos, CollagePlus
 Requires at least: 3.0.1
 Tested up to: 3.4
 Stable tag: 4.3
@@ -11,7 +11,7 @@ A responsive gallery which always fits your screen and never looks dull.
 
 == Description ==
 
-This plugin is the combination of collagePlus jquery image gallery and lightbox image gallery. This plugin is responsive
+This plugin is the combination of collagePlus jquery image gallery and Fancybox image gallery. This plugin is responsive
 and always fits your screen width. You can use the short codes provided, to put the gallery anywhere you want. The
 options for the shortcodes is available at the admin panel. 
 
