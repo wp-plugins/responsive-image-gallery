@@ -129,6 +129,7 @@
 	
 	function gallery_show($atts){		
 		global $add_my_script;
+		ob_start();
 
 		$add_my_script = true;
 		
@@ -143,6 +144,8 @@
 			$light = true;
 		}
 		include ABSPATH ."wp-content/plugins/responsive-image-gallery/gallery.php";
+		$output = ob_get_clean();
+		return $output;
 	}
 	
 	function misc_page(){
