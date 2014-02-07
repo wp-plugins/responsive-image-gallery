@@ -42,7 +42,7 @@
 		wp_enqueue_script('responsive_sajes_collage', plugins_url('js/jquery.collagePlus.js', __FILE__));
 		wp_enqueue_script('responsive_sajes_whitespace', plugins_url('js/jquery.removeWhitespace.min.js', __FILE__));
 		
-		if($light)
+		//if($light)
 			wp_enqueue_script('responsive_sajes_light', plugins_url('js/jquery.fancybox.js', __FILE__));
 	}
 	
