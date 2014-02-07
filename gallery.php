@@ -11,7 +11,11 @@
 			});
 		});
 		
-		jQuery(".fancybox").fancybox();
+		jQuery(".fancybox").fancybox({helpers     : {
+			title: {
+				type: 'inside'
+			}
+		}});
 		
 		// Here we apply the actual CollagePlus plugin
 		function collage() {
@@ -83,7 +87,7 @@
 		foreach($images as $image):
 		?>
 		<div class="Image_Wrapper" <?php echo ($image->desc_ != '')? "data-caption='".stripslashes($image->desc_)."'" : '' ;?>>
-			<a class="fancybox" rel="gallery1" href="<?php echo $image->image;?>">
+			<a title="<?php echo ($image->desc_ != '')? substr(stripslashes($image->desc_), 0, 30)."..'" : '' ;?>"  class="fancybox" rel="gallery1" href="<?php echo $image->image;?>">
 				<img src="<?php echo $image->thumb;?>">
 			</a>
 		</div>
@@ -95,7 +99,7 @@
 		foreach($gallery as $key => $image){
 			?>
 				<div class="Image_Wrapper" <?php echo ($image->desc_ != '')? "data-caption='".substr(stripslashes($image->desc_), 0, 30)."..'" : '' ;?>>
-					<a href="<?php the_permalink(); ?>?gallery=<?php echo $image->id; ?>">
+					<a title="<?php echo ($image->desc_ != '')? substr(stripslashes($image->desc_), 0, 30)."..'" : '' ;?>" href="<?php the_permalink(); ?>?gallery=<?php echo $image->id; ?>">
 						<img src="<?php echo $image->thumb;?>">
 					</a>
 				</div>
