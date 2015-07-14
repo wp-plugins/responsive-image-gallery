@@ -26,12 +26,6 @@ and user friendly.
 2. Activate the plugin through the 'Plugins' menu in WordPress
 3. Place the shortcode provided in your templates for awesome responsive gallery
 
-== Frequently Asked Questions ==
-
-= I dont see any image upload buttons or inks? =
-
-This plugin does not give that functionality. The users can upload the images from wordpress default media manager and then select those images to your created gallery from responsive image gallery UI.
-
 == Screenshots ==
 
 1. A Screenshot of the gallery
