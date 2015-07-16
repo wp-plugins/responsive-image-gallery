@@ -11,7 +11,7 @@ A responsive gallery which always fits your screen and never looks dull.
 
 == Description ==
 
-This plugin is the combination of collagePlus jquery image gallery and Fancybox image gallery. This plugin is responsive
+This plugin is the combination of collagePlus jquery image gallery and Photobox image gallery. This plugin is responsive
 and always fits your screen width. The user interface is updated to make it more user friendly.
 
 == Installation ==
