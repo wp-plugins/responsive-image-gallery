@@ -2,7 +2,7 @@
  /*
   * Plugin Name: Responsive Image Gallery
   * Description: Image gallery made by integrating "collagePlus" and "Photobox" jquery plugin
-  * Version: 2.1
+  * Version: 3
   * Author: Sajesh Bahing
   * Author URI: http://www.sajes-bahing.com.np
   * Plugin URI: http://wordpress.org/plugins/responsive-image-gallery/
