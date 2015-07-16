@@ -26,51 +26,32 @@ jQuery(document).ready(function($){
 	
 	function FancyBoxSetting(){
 		setting = {
-				'arrows' : true, //can be false
-				'closeBtn' : true, //can be false
-				'autoPlay' : false,
-				'playSpeed' : 3000,
-	            'helpers' : {
-					'title' : {'type' : 'float'}
-				}
+				'single' : 0, //can be false
+				'autoplay' : 0,
+				'time' : 3000,
+				'loop' : 1,
+				'thumbs' : 1,
+				'zoomable' : 1
 	      };
 		
 		$(".settingFancybox").change(function(){
 			var navigation_button = $("#navigation_button").val();
-			var close_button = $("#close_button").val();
 			var autoplay = $("#autoplay").val();
-			var slideshow_speed = $("#slideshow_speed").val();
-			var title_placing = $("#title_placing").val();
-			var thumbnails = parseInt($("#thumbnails").val());
-			var thumbnail_dimension_x = $("#thumbnail_dimension_x").val();
-			var thumbnail_dimension_y = $("#thumbnail_dimension_y").val();
+			var time = $("#time").val();
+			var loop = $("#loop").val();
+			var thumbs = $("#thumbs").val();
+			var zoomable = parseInt($("#zoomable").val());
 			
-			var object;
+			var object = {
+				single : navigation_button, //can be false
+				time : time,
+				autoplay : autoplay,
+				loop : loop,
+				thumbs : thumbs,
+				zoomable : zoomable
+	      };
 			
-			if(thumbnails){
-				object = {
-					'arrows' : navigation_button, //can be false
-					'closeBtn' : close_button, //can be false
-					'autoPlay' : autoplay,
-					'playSpeed' : slideshow_speed,
-		            'helpers' : {
-						'title' : {'type' : title_placing},
-						'thumbs' : {'width' : thumbnail_dimension_x, 'height' : thumbnail_dimension_y}
-					}
-		      };
-			}else{
-				object = {
-					'arrows' : navigation_button, //can be false
-					'closeBtn' : close_button, //can be false
-					'autoPlay' : autoplay,
-					'playSpeed' : slideshow_speed,
-		            'helpers' : {
-						'title' : {'type' : title_placing}
-					}
-		      };
-			}
-			
-			$("#responsive_image_fancybox").val(JSON.stringify(object));
+			$("#responsive_image_photobox").val(JSON.stringify(object));
 		});
 	}
 	

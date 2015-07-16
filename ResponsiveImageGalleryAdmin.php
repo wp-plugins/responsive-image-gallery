@@ -115,7 +115,7 @@ class ResponsiveImageGalleryAdmin extends Utility{
 		
 		add_meta_box(
 			'responsive_fancybox_setting_gallery',
-			__('Fancybox setting', 'fancybox_settings'),
+			__('Popup setting', 'photobox_settings'),
 			array($this, 'responsive_gallery_fancybox_setting'),
 			'responsive_gallery'
 		);
@@ -220,104 +220,75 @@ class ResponsiveImageGalleryAdmin extends Utility{
 	}
 
 	function responsive_gallery_fancybox_setting($post){
-		wp_nonce_field( 'responsive_image_gallery_save_fancybox', 'responsive_image_fancybox_nonce' );
+		wp_nonce_field( 'responsive_image_gallery_save_fancybox', 'responsive_image_photobox_nonce' );
 		
-		$value = get_post_meta( $post->ID, 'responsive_image_fancybox', true );
+		$value = get_post_meta( $post->ID, 'responsive_image_photobox', true );
 		if($value != ''){
 			$value_ = (array) json_decode($value);
 		}else{
 			//title = 'float', 'inside', 'outside' or 'over'
 			$value_ = array(
-				'arrows' => true, //can be false
-				'closeBtn' => true, //can be false
-				'autoPlay' => false,
-				'playSpeed' => 3000,
-	            'helpers' => (object) array(
-					'title' => (object) array('type' => 'float'),
-					//'thumbs' => array('width' => 50, 'height' => 50)
-				)
+				'single' => 0, //can be false
+				'autoplay' => 0,
+				'time' => 3000,
+				'loop' => 1,
+				'thumbs' => 1,
+				'zoomable' => 1
 	        );
 		}
 		
-		
 		?>
-			<input type="hidden" name="responsive_image_fancybox" id="responsive_image_fancybox" value='<?php echo ($value == '')? json_encode($value_) : $value; ?>' />
+			<input type="hidden" name="responsive_image_photobox" id="responsive_image_photobox" value='<?php echo ($value == '')? json_encode($value_) : $value; ?>' />
 			
-			<label for="navigation_button">Navigation Button</label>
+			<label for="navigation_button">Show Popup controls</label>
 			<select id="navigation_button" class="settingFancybox">
-				<option value="1" <?php echo (($value_['arrows']== '1')? 'selected=""': '' ); ?>>Show</option>
-				<option value="0" <?php echo (($value_['arrows']== '0')? 'selected=""': '' ); ?>>Hide</option>
+				<option value="0" <?php echo (($value_['single']== '0')? 'selected=""': '' ); ?>>Show</option>
+				<option value="1" <?php echo (($value_['single']== '1')? 'selected=""': '' ); ?>>Hide</option>
 			</select>
 			
 			<br><br>
 			
-			<label for="close_button">Close Button</label>
-			<select id="close_button" class="settingFancybox">
-				<option value="1" <?php echo (($value_['closeBtn']== '1')? 'selected=""': '' ); ?>>Show</option>
-				<option value="0"<?php echo (($value_['closeBtn']== '0')? 'selected=""': '' ); ?>>Hide</option>
-			</select>
-			
-			<br><br>
-			
-			<label for="autoplay">Sideshow Fancybox</label>
+			<label for="autoplay">Autoplay Gallery on start?</label>
 			<select id="autoplay" class="settingFancybox">
-				<option value="1" <?php echo (($value_['autoPlay']== '1')? 'selected=""': '' ); ?>>Yes</option>
-				<option value="0" <?php echo (($value_['autoPlay']== '0')? 'selected=""': '' ); ?>>No</option>
-			</select>
-			
+				<option value="1" <?php echo (($value_['autoplay']== '1')? 'selected=""': '' ); ?>>Yes</option>
+				<option value="0"<?php echo (($value_['autoplay']== '0')? 'selected=""': '' ); ?>>No</option>
+			</select>			
 			<br><br>
 			
-			<label for="slideshow_speed">Slideshow Speed</label>
-			<select id="slideshow_speed" class="settingFancybox">
+			<label for="time">Slideshow Speed (Set as '0' to hide the autoplay button completely)</label>
+			<select id="time" class="settingFancybox">
 				<?php
-					for($i=500;$i<10000;$i=$i+500){
+					for($i=0;$i<=5000;$i=$i+500){
 						?>
-						<option value="<?php echo $i; ?>" <?php echo (($value_['playSpeed']== "$i")? 'selected=""': '' ); ?>><?php echo $i; ?></option>
+						<option value="<?php echo $i; ?>" <?php echo (($value_['time']== "$i")? 'selected=""': '' ); ?>><?php echo $i; ?></option>
 						<?php
 					}
 				?>
-			</select> Milliseconds
+			</select> Milliseconds<br><br>
 			
-			<br><br>
-			
-			<label for="title_placing">Title Placing</label>
-			<select id="title_placing" class="settingFancybox">
-				<option value="float" <?php echo (($value_['helpers']->title->type == 'float')? 'selected=""': '' ); ?>>Float</option>
-				<option value="inside" <?php echo (($value_['helpers']->title->type == 'inside')? 'selected=""': '' ); ?>>Inside</option>
-				<option value="outside" <?php echo (($value_['helpers']->title->type == 'outside')? 'selected=""': '' ); ?>>Outside</option>
-				<option value="over" <?php echo (($value_['helpers']->title->type == 'over')? 'selected=""': '' ); ?>>Over</option>
+			<label for="loop">Loop gallery</label>
+			<select id="loop" class="settingFancybox">
+				<option value="1" <?php echo (($value_['loop']== '1')? 'selected=""': '' ); ?>>Yes</option>
+				<option value="0" <?php echo (($value_['loop']== '0')? 'selected=""': '' ); ?>>No</option>
 			</select>
 			
 			<br><br>
 			
-			<label for="thumbnails">Show thumbnails</label>
-			<select class="settingFancybox" id="thumbnails">
-				<option value="1" <?php echo ( isset($value_['helpers']->thumbs)? 'selected=""': '' ); ?>>Yes</option>
-				<option value="0" <?php echo ( !isset($value_['helpers']->thumbs)? 'selected=""': '' ); ?>>No</option>
+			<label for="thumbs">Show thumbnails</label>
+			<select id="thumbs" class="settingFancybox">
+				<option value="1" <?php echo (($value_['thumbs']== '1')? 'selected=""': '' ); ?>>Yes</option>
+				<option value="0"<?php echo (($value_['thumbs']== '0')? 'selected=""': '' ); ?>>No</option>
+			</select>			
+			<br><br>
+			
+			<label for="zoomable">Zoomable gallery images</label>
+			<select id="zoomable" class="settingFancybox">
+				<option value="1" <?php echo (($value_['zoomable']== '1')? 'selected=""': '' ); ?>>Yes</option>
+				<option value="0" <?php echo (($value_['zoomable']== '0')? 'selected=""': '' ); ?>>No</option>
 			</select>
 			
 			<br><br>
 			
-			<label for="thumbnail_dimension_x">Thumbnail dimensions</label>
-			<select class="settingFancybox" id="thumbnail_dimension_x">
-				<?php
-					for($i=50;$i<=300;$i=$i+50){
-						?>
-						<option value="<?php echo $i; ?>" <?php if(isset($value_['helpers']->thumbs)) echo (($value_['helpers']->thumbs->width == "$i")? 'selected=""': '' ); ?>><?php echo $i; ?></option>
-						<?php
-					}
-				?>
-			</select>
-			
-			<select class="settingFancybox" id="thumbnail_dimension_y">
-				<?php
-					for($i=50;$i<=300;$i=$i+50){
-						?>
-						<option value="<?php echo $i; ?>"  <?php if(isset($value_['helpers']->thumbs)) echo (($value_['helpers']->thumbs->height == "$i")? 'selected=""': '' ); ?>><?php echo $i; ?></option>
-						<?php
-					}
-				?>
-			</select>Pixels
 		<?php
 	}
 	
@@ -325,7 +296,7 @@ class ResponsiveImageGalleryAdmin extends Utility{
 		// Check if our nonce is set.
 		if ( ! isset( $_POST['responsive_image_gallery_nonce'])
 			&& ! isset($_POST['responsive_image_collage_nonce']) 
-			&& ! isset($_POST['responsive_image_fancybox_nonce'])) {
+			&& ! isset($_POST['responsive_image_photobox_nonce'])) {
 			return;
 		}
 	
@@ -333,7 +304,7 @@ class ResponsiveImageGalleryAdmin extends Utility{
 		if (
 		! wp_verify_nonce( $_POST['responsive_image_gallery_nonce'], 'responsive_image_gallery_save_images' )
 		&& ! wp_verify_nonce( $_POST['responsive_image_collage_nonce'], 'responsive_image_gallery_save_collage' )
-		&& ! wp_verify_nonce( $_POST['responsive_image_fancybox_nonce'], 'responsive_image_gallery_save_fancybox' )	
+		&& ! wp_verify_nonce( $_POST['responsive_image_photobox_nonce'], 'responsive_image_gallery_save_fancybox' )	
 		 ) {
 			return;
 		}
@@ -380,12 +351,12 @@ class ResponsiveImageGalleryAdmin extends Utility{
 			return;
 		}
 		
-		if(isset($_POST['responsive_image_fancybox'])){
+		if(isset($_POST['responsive_image_photobox'])){
 			// Sanitize user input.
-			$my_data = sanitize_text_field( $_POST['responsive_image_fancybox'] );
+			$my_data = sanitize_text_field( $_POST['responsive_image_photobox'] );
 		
 			// Update the meta field in the database.
-			update_post_meta( $post_id, 'responsive_image_fancybox', $my_data );	
+			update_post_meta( $post_id, 'responsive_image_photobox', $my_data );	
 		}else{
 			return;
 		}

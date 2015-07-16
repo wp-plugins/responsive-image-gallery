@@ -1,8 +1,8 @@
  <?php
  /*
   * Plugin Name: Responsive Image Gallery
-  * Description: Image gallery made by integrating "collagePlus" and "Fancybox" jquery plugin
-  * Version: 2
+  * Description: Image gallery made by integrating "collagePlus" and "Photobox" jquery plugin
+  * Version: 2.1
   * Author: Sajesh Bahing
   * Author URI: http://www.sajes-bahing.com.np
   * Plugin URI: http://wordpress.org/plugins/responsive-image-gallery/
@@ -15,7 +15,6 @@ require_once 'ResponsiveImageGalleryAdmin.php';
 class ImageGallery{
 	var $collageOptions, $fancyOption;
 	static $add_script;
-	static $add_fancybox_thumb;
 	
 	function __construct(){
 		$this->adminPanel();
@@ -39,33 +38,24 @@ class ImageGallery{
 	
 	function register_script(){
 		wp_register_style('responsive-image-gallery-collage-plus-css', plugins_url('collage-plus/css/transitions.css', __FILE__));
-		wp_register_style('responsive-image-gallery-fancy-box-css', plugins_url('fancyapps/source/jquery.fancybox.css', __FILE__));
-		wp_register_style('responsive-image-gallery-fancy-box-thumb-css', plugins_url('fancyapps/source/helpers/jquery.fancybox-thumbs.css', __FILE__));
+		wp_register_style('responsive-image-gallery-photobox-css', plugins_url('photobox/photobox/photobox.css', __FILE__));
 		
 		wp_register_script('responsive-image-gallery-collage-plus', plugins_url('collage-plus/jquery.collagePlus.min.js', __FILE__), array('jquery'));
 		wp_register_script('responsive-image-gallery-collage-remove-whitespace', plugins_url('collage-plus/extras/jquery.removeWhitespace.min.js', __FILE__), array('jquery'));
 		wp_register_script('responsive-image-gallery-collage-caption', plugins_url('collage-plus/extras/jquery.collageCaption.min.js', __FILE__), array('jquery'));
-		
-		wp_register_script('responsive-image-gallery-fancybox-script', plugins_url('fancyapps/source/jquery.fancybox.js', __FILE__), array('jquery'));	
-		wp_register_script('responsive-image-gallery-fancybox-thumbs-script', plugins_url('fancyapps/source/helpers/jquery.fancybox-thumbs.js', __FILE__), array('jquery'));
+		wp_register_script('responsive-image-gallery-photobox', plugins_url('photobox/photobox/jquery.photobox.js', __FILE__), array('jquery'));
 	}
 	
 	function print_script(){
 		if ( ! self::$add_script )
 			return;
 		wp_print_styles('responsive-image-gallery-collage-plus-css');
-		wp_print_styles('responsive-image-gallery-fancy-box-css');
+		wp_print_styles('responsive-image-gallery-photobox-css');
 		
 		wp_print_scripts('responsive-image-gallery-collage-plus');
 		wp_print_scripts('responsive-image-gallery-collage-remove-whitespace');
 		wp_print_scripts('responsive-image-gallery-collage-caption');
-		wp_print_scripts('responsive-image-gallery-fancybox-script');
-		
-		if( ! self::$add_fancybox_thumb )
-			return;
-		
-		wp_print_styles('responsive-image-gallery-fancy-box-thumb-css');
-		wp_print_scripts('responsive-image-gallery-fancybox-thumbs-script');
+		wp_print_scripts('responsive-image-gallery-photobox');
 	}
 	
 	private function adminPanel(){
@@ -113,26 +103,20 @@ class ImageGallery{
 		$collage_options = json_encode($collage_options);
 		$this->setCollageOption($collage_options);
 		
-		$fancySetting = get_post_meta( $post_id, 'responsive_image_fancybox', true );
-		$fancySetting = (array) json_decode($fancySetting);
-		if(isset($fancySetting['helpers']->thumbs)){
-			self::$add_fancybox_thumb = true;
-		}
-		
-		foreach($fancySetting as $key => $value_){
-			if(is_numeric($value_))
-				$fancySetting[$key] = (int) $value_;
+		$fancySetting = get_post_meta( $post_id, 'responsive_image_photobox', true );
+		if($fancySetting != ''){
+			$fancySetting = (array) json_decode($fancySetting);
 			
-			if(isset($fancySetting[$key]->thumbs)){
-				foreach($fancySetting[$key]->thumbs as $k => $v):
-					if(is_numeric($v))
-						$fancySetting[$key]->thumbs->$k = (int) $v;
-				endforeach;
+			foreach($fancySetting as $key => $value_){
+				if(is_numeric($value_))
+					$fancySetting[$key] = (int) $value_;
 			}
+			
+			$fancySetting = json_encode($fancySetting);
+			$this->setFancyOption($fancySetting);
+		}else{
+			$this->setFancyOption();
 		}
-		
-		$fancySetting = json_encode($fancySetting);
-		$this->setFancyOption($fancySetting);
 		
 		if($value != ''){
 			$array = (array) json_decode($value);
@@ -142,7 +126,8 @@ class ImageGallery{
 			foreach($array as $value){
 				//(thumbnail, medium, large or full)
 				$image = wp_get_attachment_image_src($value->image, 'full');
-				$string .= '<div class="Image_Wrapper" '. (isset($value->description)? 'data-caption="'.$value->description.'"' : '' ) .'><a class="fancybox-'.$post_id.'" data-fancybox-group="gallery-'.$post_id.'" href="'.$image[0].'" '. (isset($value->description)? 'title="'.$value->description.'"' : '' ) .' >'.wp_get_attachment_image($value->image, 'medium').'</a></div>';
+				$image_ = wp_get_attachment_image_src($value->image, 'thumbnail');
+				$string .= '<div class="Image_Wrapper" '. (isset($value->description)? 'data-caption="'.$value->description.'"' : '' ) .'><a class="fancybox-'.$post_id.'" href="'.$image[0].'" '. (isset($value->description)? 'title="'.$value->description.'"' : '' ) .' ><img src="'.$image_[0].'" alt="" title="'. (isset($value->description)? $value->description : '' ) .'" /></a></div>';
 			}
 			$string .= '</div>
 			<style>
@@ -153,7 +138,8 @@ class ImageGallery{
 				jQuery(document).ready(function($){
 					$('.Collage-".$post_id."').removeWhitespace().collagePlus(".$this->getCollageOption().");
 					$('.Collage-".$post_id."').collageCaption();
-					$('.fancybox-".$post_id."').fancybox(".$this->getFancyOption().");
+					var options = JSON.parse('". (($this->getFancyOption() != '')? $this->getFancyOption() : '{}') ."');
+					$('.Collage-".$post_id."').photobox('a', options);
 				});
 			</script>";
 			
