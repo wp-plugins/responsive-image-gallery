@@ -12,12 +12,12 @@ The user interface is updated to make it more user friendly. Gallery can be adde
 
 == Screenshots ==
 
-1. Awesome gallery 1
-2. Awesome gallery 2
-3. Awesome gallery 3
-4. Add gallery to post or page
-5. Gallery at front 1
-6. Gallery at front 2
+1. Awesome gallery 1.
+2. Awesome gallery 2.
+3. Awesome gallery 3.
+4. Add gallery to post or page.
+5. Gallery at front 1.
+6. Gallery at front 2.
 
 == Installation ==
 1. Upload `plugin-name.php` to the `/wp-content/plugins/` directory
