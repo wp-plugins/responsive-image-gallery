@@ -100,6 +100,14 @@ class ResponsiveImageGalleryAdmin extends Utility{
 	
 	function responsive_image_gallery_add_meta_box(){
 		add_meta_box(
+			'responsive_image_shortcode',
+			__( 'Shortcode', 'shortcodes' ),
+			array($this, 'responsive_gallery_shortcode'),
+			'responsive_gallery',
+			'side'
+		);
+		
+		add_meta_box(
 			'responsive_image_gallery',
 			__( 'Images', 'images' ),
 			array($this, 'responsive_gallery_images'),
@@ -120,7 +128,79 @@ class ResponsiveImageGalleryAdmin extends Utility{
 			'responsive_gallery'
 		);
 		
+		add_meta_box(
+			'responsive_gallery_style',
+			__('Gallery style', 'gallery_style'),
+			array($this, 'responsive_gallery_style'),
+			'responsive_gallery'
+		);
+		
+		add_meta_box(
+			'responsive_gallery_style_example',
+			__('Gallery style Example', 'gallery_style_example'),
+			array($this, 'responsive_gallery_style_example'),
+			'responsive_gallery'
+		);
+		
 		add_action('wp_enqueue_scripts', array($this, 'admn_scripts'));
+	}
+	
+	function responsive_gallery_style_example(){
+		echo "<h2>Copy this css to above shown textarea to make Gallery as shown in screenshots</h2>";
+		echo '<div id="style-example"><pre>
+.Collage{
+    /*This is where you set the padding you want between the images*/
+    padding:10px;
+
+}
+
+.Collage img{
+    margin:0;
+    padding:0;
+    display:inline-block;
+    vertical-align:bottom;
+    opacity:1;
+
+    /*This is where you set the border you want for the image*/
+    border:6px solid #FFF;
+}
+
+
+/* In this example, this is the main item being resized */
+.Image_Wrapper{
+    /* to get the fade in effect, set opacity to 0 on the first element within the gallery area */
+    opacity:0;
+    -moz-box-shadow:0px 2px 4px rgba(0, 0, 0, 0.1);
+    -webkit-box-shadow:0px 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow:0px 2px 4px rgba(0, 0, 0, 0.1);
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+}
+
+.Caption{
+    font-size:14px;
+    font-weight:normal;
+    font-family:arial;
+}
+.Caption_Content{
+    /* padding:10px; */
+    color:#FFF;
+    padding:20px;
+}
+				</pre></div>';
+	}
+	
+	function responsive_gallery_style($post){
+		wp_nonce_field( 'responsive_image_gallery_style', 'responsive_gallery_style_nonce' );
+		
+		$value = get_post_meta( $post->ID, 'responsive_gallery_style', true );
+		
+		echo '<textarea placeholder="Your css here" name="responsive_gallery_style" style="width: 100%;" rows="15">'.$value.'</textarea>';
+	}
+	
+	function responsive_gallery_shortcode($post){
+		echo '<div id="shortcode-display">[show-responsive-image-gallery-by-sajesh gallery="'.$post->ID.'"]</div>';
 	}
 	
 	function responsive_gallery_images($post){
@@ -296,7 +376,8 @@ class ResponsiveImageGalleryAdmin extends Utility{
 		// Check if our nonce is set.
 		if ( ! isset( $_POST['responsive_image_gallery_nonce'])
 			&& ! isset($_POST['responsive_image_collage_nonce']) 
-			&& ! isset($_POST['responsive_image_photobox_nonce'])) {
+			&& ! isset($_POST['responsive_image_photobox_nonce'])
+			&& ! isset($_POST['responsive_gallery_style_nonce'])) {
 			return;
 		}
 	
@@ -304,7 +385,8 @@ class ResponsiveImageGalleryAdmin extends Utility{
 		if (
 		! wp_verify_nonce( $_POST['responsive_image_gallery_nonce'], 'responsive_image_gallery_save_images' )
 		&& ! wp_verify_nonce( $_POST['responsive_image_collage_nonce'], 'responsive_image_gallery_save_collage' )
-		&& ! wp_verify_nonce( $_POST['responsive_image_photobox_nonce'], 'responsive_image_gallery_save_fancybox' )	
+		&& ! wp_verify_nonce( $_POST['responsive_image_photobox_nonce'], 'responsive_image_gallery_save_fancybox' )
+		&& ! wp_verify_nonce( $_POST['responsive_gallery_style_nonce'], 'responsive_image_gallery_style' )	
 		 ) {
 			return;
 		}
@@ -357,6 +439,14 @@ class ResponsiveImageGalleryAdmin extends Utility{
 		
 			// Update the meta field in the database.
 			update_post_meta( $post_id, 'responsive_image_photobox', $my_data );	
+		}else{
+			return;
+		}
+		
+		if(isset($_POST['responsive_gallery_style'])){
+			$my_data = ( $_POST['responsive_gallery_style'] );
+			
+			update_post_meta($post_id, 'responsive_gallery_style', $my_data);
 		}else{
 			return;
 		}

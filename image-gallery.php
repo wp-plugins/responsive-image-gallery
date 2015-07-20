@@ -2,13 +2,13 @@
  /*
   * Plugin Name: Responsive Image Gallery
   * Description: Image gallery made by integrating "collagePlus" and "Photobox" jquery plugin
-  * Version: 3
+  * Version: 3.1
   * Author: Sajesh Bahing
   * Author URI: http://www.sajes-bahing.com.np
   * Plugin URI: http://wordpress.org/plugins/responsive-image-gallery/
   * 
   */
-
+  
 require_once 'util.php';
 require_once 'ResponsiveImageGalleryAdmin.php';
 
@@ -91,6 +91,7 @@ class ImageGallery{
 		
 		$value = get_post_meta( $post_id, 'responsive_image_gallery_images', true );
 		$collage_options = get_post_meta( $post_id, 'responsive_image_collage', true );
+		$style = get_post_meta( $post_id, 'responsive_gallery_style', true );
 		$collage_options = json_decode($collage_options);
 
 		foreach($collage_options as $key => $value_){
@@ -121,7 +122,7 @@ class ImageGallery{
 			$array = (array) json_decode($value);
 			$array = array_reverse($array);
 			
-			$string = '<div class="Collage-'.$post_id.'">';
+			$string = '<div class="Collage Collage-'.$post_id.'">';
 			foreach($array as $value){
 				//(thumbnail, medium, large or full)
 				$image = wp_get_attachment_image_src($value->image, 'full');
@@ -130,7 +131,7 @@ class ImageGallery{
 			}
 			$string .= '</div>
 			<style>
-				.Caption_Content{color: #fff; box-sizing: border-box; padding: 5px;}
+				'.$style.'
 			</style>'."
 			
 			<script>
