@@ -11,7 +11,6 @@ This plugin is the combination of collagePlus jquery image gallery and Photobox 
 The user interface is updated to make it more user friendly. Gallery can be added just like adding posts and pages. Each gallery will have its own page just like posts and pages, but it can also be added to any posts and pages easily (Shown in screenshot 4). Also shortcode is also provided for each gallery. To make the gallery look like a shown in the screenshot css style should be used that is provided in admin panel. 
 
 == Screenshots ==
-
 1. Awesome gallery 1.
 2. Awesome gallery 2.
 3. Awesome gallery 3.
