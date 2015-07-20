@@ -1,6 +1,6 @@
 === Responsive Image Gallery ===
 Contributors: Sajesh Bahing, Rubesh Shankhadev
-Tags: Photobox, collagePlus, responsive, image, images, gallery, photos
+Tags: collagePlus, gallery, gallery photobox, gallery plugin, gallery shortcode, image, image gallery, image gallery plugin, image slideshow, images, images gallery, Photobox, photo, photo gallery, photo album, photo albums, photos, plugin for image gallery, responsive, responsive gallery, responsive image gallery, responsive slideshow, responsive photo gallery, wordpress image gallery, wordpress photo gallery, wordpress responsive gallery, wordpress gallery plugin
 Requires at least: 3.0.1
 Tested up to: 4.2.2
 Stable tag: trunk
